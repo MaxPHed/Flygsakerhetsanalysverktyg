@@ -1,0 +1,88 @@
+﻿<Window x:Class="Flygsäkerhetsanalysverktyg.NewActionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Flygsäkerhetsanalysverktyg"
+        mc:Ignorable="d"
+        Title="Åtgärdsinställningar" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Column="0" Grid.ColumnSpan="4"
+            Content="Här kan du ändra, skapa nya eller ta bort åtgärder. Du kan även söka bland befintliga åtgärder"></Label>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="4">
+            <TextBlock Text="Visa endast risker från analys"/>
+            <CheckBox x:Name="showAllCheckBox"
+                      Checked="showAllCheckBox_Checked"
+                      Unchecked="showAllCheckBox_Checked"/>
+            <ComboBox x:Name="riskCB"
+                      Width="100" Height="25"
+                  DisplayMemberPath="Type" SelectedValuePath="Type"
+                      Text="Välj en risk" IsEditable="True" IsReadOnly="True"
+                      SelectionChanged="riskCB_SelectionChanged" VerticalAlignment="Top">
+            </ComboBox>
+            
+        </StackPanel>
+<ListBox x:Name="actionLB"
+         Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" Grid.RowSpan="2"
+                     Width="300" Height="auto" MaxHeight="200">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding ActionContent}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        <StackPanel Grid.Row="3" Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                    Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Åtgärd"/>
+                <TextBox x:Name="addActionTextBox" 
+                         Width="150"
+                         Text="{Binding Path=SelectedItem.ActionContent, ElementName=actionLB}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Är preventiv"/>
+                <CheckBox   x:Name="isPreventiveCheckBox"
+                            IsChecked="{Binding Path=SelectedItem.IsPreventive, ElementName=actionLB, Mode=OneWay}" />
+            </StackPanel>
+            <Button x:Name="changeActionButton"
+                    Click="changeActionButton_Click"
+                    ToolTip="Ändrar vald åtgärd"
+                Width="80"
+                Content="Ändra" HorizontalAlignment="Left"/>
+            <Button x:Name="newActionButton"
+                    Click="newActionButton_Click"
+                    ToolTip="Skapar en ny åtgärd"
+                Width="80"
+                Content="Lägg till ny" HorizontalAlignment="Left"/>
+            <Button x:Name="removeActionButton"
+                    Click="removeActionButton_Click"
+                    ToolTip="Tar bort markerad åtgärd"
+                Width="80"
+                Content="Ta bort" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <TextBox x:Name="searchInput"
+            Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="4" TextWrapping="Wrap" Text="Sök bland alla åtgärder" VerticalAlignment="Top" Width="140" Grid.RowSpan="2"/>
+        <Button Name="searchButton"
+                Click="searchButton_Click" Grid.Column="1" Content="Sök" HorizontalAlignment="Left" Margin="0,18,0,0" Grid.Row="4" VerticalAlignment="Top"/>
+        <DataGrid x:Name="searchResultDataGrid"
+            Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2"
+                  />
+    </Grid>
+</Window>
