@@ -179,7 +179,7 @@ namespace Flygsäkerhetsanalysverktyg
 
                 if (isNew)
                 {
-                    if (!InputCheck.checkIfOperationAlreadyExists(operationName, AllOperations)) return;
+                    if (InputCheck.checkIfOperationAlreadyExists(operationName, AllOperations)) return;
 
                     operation = new Operation(1, operationName);
 
